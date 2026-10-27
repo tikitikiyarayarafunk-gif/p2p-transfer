@@ -23,7 +23,45 @@
   <div class="background-glow glow-1"></div>
   <div class="background-glow glow-2"></div>
 
-  <div class="app-container">
+  <!-- Ekran blokady hasłem -->
+  <div class="lock-screen-overlay" id="passwordOverlay">
+    <div class="lock-card">
+      <div class="lock-icon-wrapper">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h2>Dostęp zabezpieczony</h2>
+      <p>Wprowadź hasło dostępu, aby korzystać z aplikacji DropBeam:</p>
+      
+      <form id="passwordForm" class="lock-form">
+        <div class="password-input-wrapper">
+          <input 
+            type="password" 
+            id="passwordInput" 
+            class="lock-input" 
+            placeholder="Wpisz hasło dostępu..." 
+            autocomplete="current-password" 
+            required 
+            autofocus
+          />
+        </div>
+        <div class="lock-error-msg" id="passwordError" style="display: none;">
+          ⚠️ Nieprawidłowe hasło dostępu.
+        </div>
+        <button type="submit" class="btn btn-primary btn-large btn-full">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          Odblokuj dostęp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-container" id="appContainer" style="display: none;">
     <!-- Nagłówek -->
     <header class="app-header">
       <div class="logo">
