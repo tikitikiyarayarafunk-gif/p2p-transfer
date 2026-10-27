@@ -66,6 +66,13 @@ const toastContainer = document.getElementById('toastContainer');
 window.addEventListener('DOMContentLoaded', () => {
   initPeer();
   setupEventListeners();
+
+  // Rejestracja Service Workera (PWA)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(err => {
+      console.warn('Błąd rejestracji Service Workera:', err);
+    });
+  }
 });
 
 /**
