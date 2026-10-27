@@ -62,8 +62,22 @@ const receivedList = document.getElementById('receivedList');
 
 const toastContainer = document.getElementById('toastContainer');
 
-// --- Inicjalizacja Aplikacji ---
-window.addEventListener('DOMContentLoaded', () => {
+// Elementy blokady hasłem
+const ACCESS_PASSWORD = 'GRIM-12JHG';
+const passwordOverlay = document.getElementById('passwordOverlay');
+const passwordForm = document.getElementById('passwordForm');
+const passwordInput = document.getElementById('passwordInput');
+const passwordError = document.getElementById('passwordError');
+const appContainer = document.getElementById('appContainer');
+
+let isAppInitialized = false;
+
+function unlockApp() {
+  if (isAppInitialized) return;
+  isAppInitialized = true;
+  if (passwordOverlay) passwordOverlay.style.display = 'none';
+  if (appContainer) appContainer.style.display = 'block';
+  
   initPeer();
   setupEventListeners();
 
@@ -72,6 +86,41 @@ window.addEventListener('DOMContentLoaded', () => {
     navigator.serviceWorker.register('./sw.js').catch(err => {
       console.warn('Błąd rejestracji Service Workera:', err);
     });
+  }
+}
+
+// --- Inicjalizacja Aplikacji ---
+window.addEventListener('DOMContentLoaded', () => {
+  // Sprawdź czy użytkownik jest już uwierzytelniony w tej sesji
+  const isAuth = sessionStorage.getItem('dropbeam_auth') === 'true';
+
+  if (isAuth) {
+    unlockApp();
+  } else {
+    if (passwordOverlay) passwordOverlay.style.display = 'flex';
+    if (appContainer) appContainer.style.display = 'none';
+    if (passwordInput) passwordInput.focus();
+
+    if (passwordForm) {
+      passwordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const entered = (passwordInput.value || '').trim();
+        if (entered === ACCESS_PASSWORD) {
+          sessionStorage.setItem('dropbeam_auth', 'true');
+          unlockApp();
+        } else {
+          passwordError.style.display = 'block';
+          const card = document.querySelector('.lock-card');
+          if (card) {
+            card.classList.remove('shake');
+            void card.offsetWidth; // wymuszenie reflow dla animacji
+            card.classList.add('shake');
+          }
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      });
+    }
   }
 });
 
