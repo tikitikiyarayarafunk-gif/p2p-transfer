@@ -41,14 +41,16 @@
             type="password" 
             id="passwordInput" 
             class="lock-input" 
-            placeholder="Wpisz hasło dostępu..." 
+            placeholder="Wpisz hasło..." 
             autocomplete="current-password" 
+            autocapitalize="characters"
             required 
             autofocus
           />
+          <button type="button" id="btnTogglePassword" class="btn-toggle-pwd" title="Pokaż / ukryj hasło">👁️</button>
         </div>
         <div class="lock-error-msg" id="passwordError" style="display: none;">
-          ⚠️ Nieprawidłowe hasło dostępu.
+          ⚠️ Nieprawidłowe hasło dostępu. Wymagane: <code>GRIM-12JHG</code>
         </div>
         <button type="submit" class="btn btn-primary btn-large btn-full">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
